@@ -4,7 +4,7 @@ const ADMIN_PASS = "1234";
 
 // Hardcoded Employees
 const employees = {
-  "UTP223": {name: "Shreya", department: "HRD", password: "12345"},
+  "UPT223": {name: "Shreya", department: "HRD", password: "12345"},
   "EMP001": { name: "John Doe", department: "IT", password: "12345" },
   "EMP002": { name: "Priya Sharma", department: "HR", password: "12345" },
   "EMP003": { name: "Ravi Kumar", department: "Finance", password: "12345" }
