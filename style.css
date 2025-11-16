@@ -7,7 +7,15 @@ body {
   height: 100vh;
   margin: 0;
 }
-
+header {
+  background: #0b1f40;
+  color: #fff;
+  padding: 15px 30px;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
 .container {
   background: white;
   padding: 2rem;
