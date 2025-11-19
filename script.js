@@ -68,23 +68,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const time = new Date().toLocaleString();
-    const status = toggleStatus(empId);
+const status = toggleStatus(empId);
 
-    if (status === "Limit Reached") {
-      empDetailsDiv.innerHTML = `<p style="color:red;">You have already marked 2 entries today.</p>`;
-      return;
-    }
+if (status === "Limit Reached") {
+  empDetailsDiv.innerHTML = `<p style="color:red;">You have already marked 2 entries today.</p>`;
+  document.getElementById("submitEntryBtn").style.display = "none";
+  return;
+}
 
-    const record = { id: empId, name: emp.name, dept: emp.department, time, status };
-    saveRecord(record);
+// show details only
+empDetailsDiv.innerHTML = `
+  <h3>${emp.name}</h3>
+  <p><b>ID:</b> ${empId}</p>
+  <p><b>Department:</b> ${emp.department}</p>
+  <p><b>Time:</b> ${time}</p>
+  <p><b>Status:</b> ${status}</p>
+`;
 
-    empDetailsDiv.innerHTML = `
-      <h3>${emp.name}</h3>
-      <p><b>ID:</b> ${empId}</p>
-      <p><b>Department:</b> ${emp.department}</p>
-      <p><b>Time:</b> ${time}</p>
-      <p><b>Status:</b> ${status}</p>
-    `;
+// when Submit Entry is clicked → record gets saved
+document.getElementById("submitEntryBtn").addEventListener("click", () => {
+
+  const record = { id: empId, name: emp.name, dept: emp.department, time, status };
+  saveRecord(record);
+
+  document.getElementById("entryMsg").textContent = "Entry Recorded Successfully!";
+  document.getElementById("entryMsg").style.color = "green";
+
+  // prevent double submission
+  document.getElementById("submitEntryBtn").disabled = true;
+});
+
   }
 
   // Admin Login

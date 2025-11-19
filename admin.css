@@ -6,7 +6,25 @@ body {
   justify-content: center;
   height: 100vh;
 }
-
+.header {
+  position: absolute;
+  top: 10px;
+  left: 37%;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #333;
+}
+.logo-corner {
+  position: absolute;
+  top: 15px;       
+  right: 40px;      
+  width: 120px;     
+  height: auto;
+}
+.logo-inside {
+  width: 120px;      
+  /* margin-bottom: 6px; */
+}
 .container {
   background: white;
   padding: 2rem;
