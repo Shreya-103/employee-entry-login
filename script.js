@@ -4,13 +4,13 @@ const ADMIN_PASS = "1234";
 
 // Hardcoded Employees
 const employees = {
-  "UPT223": {name: "Shreya", department: "HRD", password: "12345"},
+  "UPT223": { name: "Shreya", department: "HRD", password: "12345" },
   "EMP001": { name: "John Doe", department: "IT", password: "12345" },
   "EMP002": { name: "Priya Sharma", department: "HR", password: "12345" },
   "EMP003": { name: "Ravi Kumar", department: "Finance", password: "12345" }
 };
 
-// Utility: Save and Get Records
+//  Save and Get Records
 function saveRecord(record) {
   const records = JSON.parse(localStorage.getItem("records")) || [];
   records.push(record);
@@ -21,18 +21,26 @@ function getRecords() {
   return JSON.parse(localStorage.getItem("records")) || [];
 }
 
-// Toggle status: Inside/Outside
+//  Toggle status using stable ISO date
 function toggleStatus(empId) {
   const records = getRecords();
-  const today = new Date().toLocaleDateString();
-  const todaysRecords = records.filter(r => r.id === empId && new Date(r.time).toLocaleDateString() === today);
+
+  // pure ISO date: YYYY-MM-DD (works same on GitHub + Local)
+  const today = new Date().toISOString().split("T")[0];
+
+  const todaysRecords = records.filter(r =>
+    r.id === empId && r.dateKey === today
+  );
 
   if (todaysRecords.length >= 2) return "Limit Reached";
+
   const last = todaysRecords[todaysRecords.length - 1];
-  return (!last || last.status === "Outside Premises") ? "Inside Premises" : "Outside Premises";
+
+  return (!last || last.status === "Outside Premises")
+    ? "Inside Premises"
+    : "Outside Premises";
 }
 
-// Handle Employee Login
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   const empDetailsDiv = document.getElementById("employee-details");
@@ -57,47 +65,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Employee Details Page
+  // Employee Entry Page
   if (empDetailsDiv) {
     const empId = localStorage.getItem("currentEmployeeId");
     const emp = employees[empId];
- 
+
     if (!emp) {
       empDetailsDiv.innerHTML = `<p style='color:red;'>Invalid Employee!</p>`;
       return;
     }
 
     const time = new Date().toLocaleString();
-const status = toggleStatus(empId);
+    const status = toggleStatus(empId);
 
-if (status === "Limit Reached") {
-  empDetailsDiv.innerHTML = `<p style="color:red;">You have already marked 2 entries today.</p>`;
-  document.getElementById("submitEntryBtn").style.display = "none";
-  return;
-}
+    if (status === "Limit Reached") {
+      empDetailsDiv.innerHTML = `<p style="color:red;">You have already marked 2 entries today.</p>`;
+      document.getElementById("submitEntryBtn").style.display = "none";
+      return;
+    }
 
-// show details only
-empDetailsDiv.innerHTML = `
-  <h3>${emp.name}</h3>
-  <p><b>ID:</b> ${empId}</p>
-  <p><b>Department:</b> ${emp.department}</p>
-  <p><b>Time:</b> ${time}</p>
-  <p><b>Status:</b> ${status}</p>
-`;
+    empDetailsDiv.innerHTML = `
+      <h3>${emp.name}</h3>
+      <p><b>ID:</b> ${empId}</p>
+      <p><b>Department:</b> ${emp.department}</p>
+      <p><b>Time:</b> ${time}</p>
+      <p><b>Status:</b> ${status}</p>
+    `;
 
-// when Submit Entry is clicked → record gets saved
-document.getElementById("submitEntryBtn").addEventListener("click", () => {
+    document.getElementById("submitEntryBtn").addEventListener("click", () => {
+      const record = {
+        id: empId,
+        name: emp.name,
+        dept: emp.department,
+        time,
+        status,
+        dateKey: new Date().toISOString().split("T")[0] // important for GitHub
+      };
 
-  const record = { id: empId, name: emp.name, dept: emp.department, time, status };
-  saveRecord(record);
+      saveRecord(record);
 
-  document.getElementById("entryMsg").textContent = "Entry Recorded Successfully!";
-  document.getElementById("entryMsg").style.color = "green";
+      const entryMsg = document.getElementById("entryMsg");
+      entryMsg.textContent = "Entry Recorded Successfully!";
+      entryMsg.style.color = "green";
 
-  // prevent double submission
-  document.getElementById("submitEntryBtn").disabled = true;
-});
-
+      document.getElementById("submitEntryBtn").disabled = true;
+    });
   }
 
   // Admin Login
@@ -122,7 +134,7 @@ document.getElementById("submitEntryBtn").addEventListener("click", () => {
     const tbody = recordsTable.querySelector("tbody");
     const records = getRecords();
 
-    tbody.innerHTML = ""; // clear previous
+    tbody.innerHTML = "";
 
     records.forEach(r => {
       const row = document.createElement("tr");
@@ -138,6 +150,7 @@ document.getElementById("submitEntryBtn").addEventListener("click", () => {
 
     document.getElementById("downloadBtn").addEventListener("click", () => {
       if (records.length === 0) return alert("No records found!");
+
       const csv = [
         ["Employee ID", "Name", "Department", "Time", "Status"],
         ...records.map(r => [r.id, r.name, r.dept, r.time, r.status])
@@ -149,7 +162,5 @@ document.getElementById("submitEntryBtn").addEventListener("click", () => {
       link.download = "employee_records.csv";
       link.click();
     });
-}
-
   }
-);
+});
