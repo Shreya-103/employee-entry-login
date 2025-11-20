@@ -70,3 +70,37 @@ button:hover {
   text-decoration: none;
   color: #007bff;
 }
+
+@media (max-width: 600px) {
+
+  body {
+    height: auto;         /* avoid forced vertical centering */
+    padding-top: 120px;   /* create space for header + logo */
+    padding-bottom: 40px;
+  }
+
+  .header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .logo-corner {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 80px;       /* smaller for mobile */
+    z-index: 1000;
+  }
+
+  .container {
+    width: 90%;
+    margin-top: 40px;        /* extra spacing */
+  }
+}
+
