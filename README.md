@@ -4,6 +4,10 @@
 <p> Made this project during the internship at BEL, Ghaziabad </p>
 <h2>📁 Project Structure</h2>
 
+<a href="https://shreya-103.github.io/employee-entry-login"> Try it here </a>
+<h5> Employee ID:- UPT223, password: 12345 </h5>
+<h5> Admin ID:- admin,  password: 1234</h5>
+
 <pre>
 /
 ├── index.html          - Login page
