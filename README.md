@@ -2,12 +2,12 @@
 
 <p>A simple web-based employee attendance login and record-viewing system built using HTML, CSS, and JavaScript. It provides separate interfaces for Admin and Employee users.</p>
 <p> Made this project during the internship at BEL, Ghaziabad </p>
-<h2>📁 Project Structure</h2>
 
-<a href="https://shreya-103.github.io/employee-entry-login"> Try it here </a>
+<a href="https://shreya-103.github.io/employee-entry-login"> 📎Try it here</a>
 <h5> Employee ID:- UPT223, password: 12345 </h5>
 <h5> Admin ID:- admin,  password: 1234</h5>
 
+<h2>📁 Project Structure</h2>
 <pre>
 /
 ├── index.html          - Login page
