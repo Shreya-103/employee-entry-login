@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const API_URL = "http://localhost:5000";
-
+const API_URL = "https://employee-entry-backend.onrender.com";
   const loginForm = document.getElementById("loginForm");
   const adminLogin = document.getElementById("admin-login");
   const empDetailsDiv = document.getElementById("employee-details");
