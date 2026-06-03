@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
 
   const records =
-    await Record.find().sort({
+  await Record.find().sort({
       _id: -1
     });
 
