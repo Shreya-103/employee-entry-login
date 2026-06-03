@@ -4,35 +4,60 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
+  position: relative;
 }
-.header {
+.top-bar {
   position: absolute;
-  top: 10px;
-  left: 25%;
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: #333;
-}
-.logo-corner {
-  position: absolute;
-  top: 15px;       
-  right: 40px;      
-  width: 120px;     
-  height: auto;
-}
-.logo-inside {
-  width: 120px;      
-  /* margin-bottom: 6px; */
+  top: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.logo-corner {
+  position: absolute;
+  right: 30px;
+  width: 120px;
+}
+
+/* Header */
+.header {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Top-right logo */
+.logo-corner {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  width: 120px;
+  height: auto;
+}
+
+.logo-inside {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+/* Login Box */
 .container {
   background: white;
   padding: 2rem;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  width: 300px;
+  width: 320px;
   text-align: center;
 }
 
@@ -71,36 +96,26 @@ button:hover {
   color: #007bff;
 }
 
-@media (max-width: 600px) {
-
+/* Mobile */
+@media (max-width: 768px) {
   body {
-    height: auto;         /* avoid forced vertical centering */
-    padding-top: 120px;   /* create space for header + logo */
-    padding-bottom: 40px;
+    padding-top: 120px;
   }
 
   .header {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-    text-align: center;
-    width: 100%;
-    z-index: 1000;
+    font-size: 1.8rem;
+    width: 90%;
+    white-space: normal;
   }
 
   .logo-corner {
-    position: fixed;
+    width: 70px;
     top: 10px;
     right: 10px;
-    width: 80px;       /* smaller for mobile */
-    z-index: 1000;
   }
 
   .container {
-    width: 90%;
-    margin-top: 40px;        /* extra spacing */
+    width: 85%;
+    max-width: 320px;
   }
 }
-
