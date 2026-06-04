@@ -25,17 +25,17 @@ function stopLoading() {
 document.addEventListener("DOMContentLoaded", () => {
 
   const API_URL = "https://employee-entry-backend.onrender.com";
-  
+
   const loginForm = document.getElementById("loginForm");
   const adminLogin = document.getElementById("admin-login");
   const empDetailsDiv = document.getElementById("employee-details");
   const recordsTable = document.getElementById("recordsTable");
 
-//employee login
+  //employee login
   if (loginForm) {
 
     loginForm.addEventListener("submit", async (e) => {
-        startLoading();
+      startLoading();
       e.preventDefault();
 
       const employeeId =
@@ -46,7 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const msg =
         document.getElementById("msg");
+      const btn =
+        loginForm.querySelector("button");
 
+      btn.disabled = true;
+      btn.innerHTML =
+        "⏳ Logging in...";
       try {
 
         const response = await fetch(
@@ -71,18 +76,21 @@ document.addEventListener("DOMContentLoaded", () => {
             "employee",
             JSON.stringify(data.employee)
           );
-            stopLoading();
-           setTimeout(() => {
-          window.location.href = "employee.html";
+          stopLoading();
+          setTimeout(() => {
+            window.location.href = "employee.html";
           }, 300);
           // window.location.href =
           //   "employee.html";
+          btn.disabled = false;
+          btn.innerHTML = "Login";
 
         } else {
           stopLoading();
           msg.textContent =
             data.message;
-
+          btn.disabled = false;
+          btn.innerHTML = "Login";
           msg.style.color = "red";
         }
 
@@ -217,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     adminLogin.addEventListener(
       "submit",
       (e) => {
+        startLoading();
         e.preventDefault();
         const username =
           document.getElementById(
@@ -237,12 +246,12 @@ document.addEventListener("DOMContentLoaded", () => {
           username === "admin" &&
           password === "1234"
         ) {
-
+          stopLoading();
           window.location.href =
             "records.html";
 
         } else {
-
+          stopLoading();
           msg.textContent =
             "Invalid Credentials";
 
@@ -257,10 +266,22 @@ document.addEventListener("DOMContentLoaded", () => {
   if (recordsTable) {
     loadRecords();
     async function loadRecords() {
-      const tbody =
-        recordsTable.querySelector(
-          "tbody"
-        );
+      tbody.innerHTML = `
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+`;
 
       tbody.innerHTML = "";
 
@@ -317,10 +338,10 @@ document.addEventListener("DOMContentLoaded", () => {
                   r.status
                 ])
               ]
-              .map(row =>
-                row.join(",")
-              )
-              .join("\n");
+                .map(row =>
+                  row.join(",")
+                )
+                .join("\n");
 
               const blob =
                 new Blob(
