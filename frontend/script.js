@@ -154,70 +154,67 @@ document.addEventListener("DOMContentLoaded", () => {
         "submitEntryBtn"
       );
 
-    submitBtn.addEventListener(
-      "click",
-      async () => {
+   submitBtn.addEventListener(
+  "click",
+  async () => {
 
-        try {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "⏳ Submitting...";
 
-          const response =
-            await fetch(
-              `${API_URL}/api/records`,
-              {
-                method: "POST",
+    try {
 
-                headers: {
-                  "Content-Type":
-                    "application/json"
-                },
-
-                body: JSON.stringify({
-                  employeeId:
-                    emp.employeeId,
-
-                  name:
-                    emp.name,
-
-                  department:
-                    emp.department,
-
-                  status,
-
-                  time,
-
-                  dateKey:
-                    new Date()
-                      .toISOString()
-                      .split("T")[0]
-                })
-              }
-            );
-
-          if (response.ok) {
-
-            const entryMsg =
-              document.getElementById(
-                "entryMsg"
-              );
-
-            entryMsg.textContent =
-              "Entry Recorded Successfully";
-
-            entryMsg.style.color =
-              "green";
-
-            submitBtn.disabled =
-              true;
-          }
-
-        } catch (error) {
-
-          alert(
-            "Unable to save record"
-          );
+      const response = await fetch(
+        `${API_URL}/api/records`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            employeeId: emp.employeeId,
+            name: emp.name,
+            department: emp.department
+          })
         }
+      );
+
+      const data = await response.json();
+
+      const entryMsg =
+        document.getElementById("entryMsg");
+
+      if (data.success) {
+
+        entryMsg.textContent =
+          `Entry Recorded: ${data.record.status}`;
+
+        entryMsg.style.color = "green";
+
+        submitBtn.innerHTML =
+          "✓ Submitted";
+
+      } else {
+
+        entryMsg.textContent =
+          data.message;
+
+        entryMsg.style.color = "red";
+
+        submitBtn.disabled = false;
+        submitBtn.innerHTML =
+          "Submit Entry";
       }
-    );
+
+    } catch (error) {
+
+      alert("Unable to save record");
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML =
+        "Submit Entry";
+    }
+  }
+);
   }
 
   // ADMIN LOGIN
@@ -263,7 +260,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // RECORDS PAGE
+
   if (recordsTable) {
+    const tbody = recordsTable.querySelector("tbody");
     loadRecords();
     async function loadRecords() {
       tbody.innerHTML = `
