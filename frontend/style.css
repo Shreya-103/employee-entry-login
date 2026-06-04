@@ -17,6 +17,16 @@ body {
   justify-content: center;
   align-items: center;
 }
+#progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: #007bff;
+  z-index: 9999;
+  transition: width 0.3s ease;
+}
 
 .logo-corner {
   position: absolute;

@@ -1,3 +1,27 @@
+function startLoading() {
+  const bar = document.getElementById("progressBar");
+
+  if (!bar) return;
+
+  bar.style.width = "30%";
+
+  setTimeout(() => {
+    bar.style.width = "70%";
+  }, 300);
+}
+
+function stopLoading() {
+  const bar = document.getElementById("progressBar");
+
+  if (!bar) return;
+
+  bar.style.width = "100%";
+
+  setTimeout(() => {
+    bar.style.width = "0%";
+  }, 300);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const API_URL = "https://employee-entry-backend.onrender.com";
@@ -7,14 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const empDetailsDiv = document.getElementById("employee-details");
   const recordsTable = document.getElementById("recordsTable");
 
-  // =========================
-  // EMPLOYEE LOGIN
-  // =========================
-
+//employee login
   if (loginForm) {
 
     loginForm.addEventListener("submit", async (e) => {
-
+        startLoading();
       e.preventDefault();
 
       const employeeId =
@@ -50,12 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
             "employee",
             JSON.stringify(data.employee)
           );
-
-          window.location.href =
-            "employee.html";
+            stopLoading();
+           setTimeout(() => {
+          window.location.href = "employee.html";
+          }, 300);
+          // window.location.href =
+          //   "employee.html";
 
         } else {
-
+          stopLoading();
           msg.textContent =
             data.message;
 
@@ -72,10 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =========================
   // EMPLOYEE ENTRY PAGE
-  // =========================
-
   if (empDetailsDiv) {
 
     const emp = JSON.parse(
@@ -191,18 +212,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // =========================
   // ADMIN LOGIN
-  // =========================
-
   if (adminLogin) {
-
     adminLogin.addEventListener(
       "submit",
       (e) => {
-
         e.preventDefault();
-
         const username =
           document.getElementById(
             "username"
@@ -238,16 +253,10 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // =========================
   // RECORDS PAGE
-  // =========================
-
   if (recordsTable) {
-
     loadRecords();
-
     async function loadRecords() {
-
       const tbody =
         recordsTable.querySelector(
           "tbody"

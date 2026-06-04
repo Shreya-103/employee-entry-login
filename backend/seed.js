@@ -4,7 +4,7 @@ const Employee =
 require("./models/Employee");
 
 mongoose.connect(
-"mongodb://127.0.0.1:27017/employeeEntryDB"
+"mongodb+srv://plagiarism108_db_user:Shreya103@cluster0.xugjre9.mongodb.net/?appName=Cluster0"
 );
 
 Employee.insertMany([
