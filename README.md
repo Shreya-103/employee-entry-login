@@ -1,40 +1,107 @@
-<h1>Employee Entry Login System</h1>
+# Employee Entry Login System
+<h5>Made during internship at BEL.</h5>
+A full-stack employee attendance and record management system that allows employees to log in, mark attendance, and admin can view their records through a simple and user-friendly interface.
 
-<p>A simple web-based employee attendance login and record-viewing system built using HTML, CSS, and JavaScript. It provides separate interfaces for Admin and Employee users.</p>
-<p> Made this project during the internship at BEL, Ghaziabad </p>
+## Features
 
-<a href="https://shreya-103.github.io/employee-entry-login"> 📎Try it here</a>
-<h5> Employee ID:- UPT223, password: 12345 </h5>
-<h5> Admin ID:- admin,  password: 1234</h5>
+### Employee Module
 
-<h2>📁 Project Structure</h2>
-<pre>
-/
-├── index.html          - Login page
-├── admin.html          - Admin dashboard
-├── employee.html       - Employee page for viewing data
-├── records.html        - Page displaying all employee records
-├── style.css           - General styling
-├── admin.css           - Admin page styling
-├── records.css         - Styling for records page
-├── script.js           - JavaScript logic for login & navigation
-└── bel.png             - Image asset
-</pre>
+* Employee login using Employee ID
+* Attendance entry and tracking
+* View personal attendance records
+* Responsive user interface
 
-<h2>✨ Features</h2>
-<ul>
-  <li>Login page for Admin and Employee</li>
-  <li>Admin dashboard to manage or view employee data</li>
-  <li>Employee page to view records</li>
-  <li>Records page showing available employee entries</li>
-  <li>Client-side logic written fully in JavaScript</li>
-  <li>Clean and simple UI using CSS</li>
-</ul>
+### Admin Module
 
+* Access employee records
+* Monitor attendance data
+* Manage employee information
 
-<h2>⚠️ Limitations</h2>
-<ul>
-  <li>No backend or database (data will not persist).</li>
-  <li>Authentication is purely client-side and not secure.</li>
-  <li>Suitable only for demos or learning purposes.</li>
-</ul>
+### Backend Features
+
+* RESTful API architecture
+* MongoDB database integration
+* Secure data storage and retrieval
+* Record management system
+
+## Tech Stack
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript (Vanilla JS)
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB Atlas
+
+### Deployment
+
+* Frontend: Netlify
+* Backend: Render
+
+## Project Structure
+
+```text
+employee-entry-login/
+│
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+├── backend/
+│   ├── package.json
+│   ├── server.js
+│   ├── routes/
+│   ├── models/
+│   └── config/
+│
+└── README.md
+```
+
+### Frontend Setup
+
+Open the `frontend` folder and run the application using a local server or open `index.html` in your browser.
+
+## API Configuration
+
+Update the API URL inside `frontend/script.js` to point to your deployed backend:
+
+```javascript
+const API_URL = "https://your-render-backend-url.onrender.com";
+```
+
+## Deployment
+
+### Frontend (Netlify)
+
+* Base Directory: `frontend`
+* Publish Directory: `.`
+* Build Command: Leave empty
+
+### Backend (Render)
+
+* Root Directory: `backend`
+* Build Command:
+
+```bash
+npm install
+```
+
+* Start Command:
+
+```bash
+npm start
+```
+## Author
+
+Shreya
+
+GitHub: https://github.com/Shreya-103
