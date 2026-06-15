@@ -2,6 +2,7 @@
 <h5>Made during internship at BEL.</h5>
 A full-stack employee attendance and record management system that allows employees to log in, mark attendance, and admin can view their records through a simple and user-friendly interface.
 
+<a href="https://employee-entry-login.netlify.app"> Try it here </a>
 
 ## Features
 
