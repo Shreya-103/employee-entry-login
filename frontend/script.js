@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
       new Date().toLocaleString();
 
     const status =
-      "Pending";
+      "";
 
     empDetailsDiv.innerHTML = `
       <h3>${emp.name}</h3>
