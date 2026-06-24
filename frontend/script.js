@@ -81,28 +81,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // EMPLOYEE ENTRY PAGE
   if (empDetailsDiv) {
-
     const emp = JSON.parse(localStorage.getItem("employee"));
     if (!emp) {
       empDetailsDiv.innerHTML ="<p style='color:red'>Please Login First</p>";
       return;
     }
-
     const time = new Date().toLocaleString();
     const status = "";
     empDetailsDiv.innerHTML = ` <h3>${emp.name}</h3>
       <p> <b>ID:</b>  ${emp.employeeId} </p>
       <p> <b>Department:</b> ${emp.department} </p>
       <p> <b>Time:</b> ${time} </p>
-
       `; // <p> <b>Status:</b> ${status} </p>
 
     const submitBtn = document.getElementById("submitEntryBtn");
-
    submitBtn.addEventListener("click", async () => {
     submitBtn.disabled = true;
     submitBtn.innerHTML = "⏳ Submitting...";
-
     try {
       const response = await fetch(
         `${API_URL}/api/records`,
