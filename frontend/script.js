@@ -1,10 +1,7 @@
 function startLoading() {
   const bar = document.getElementById("progressBar");
-
   if (!bar) return;
-
   bar.style.width = "30%";
-
   setTimeout(() => {
     bar.style.width = "70%";
   }, 300);
@@ -12,11 +9,8 @@ function startLoading() {
 
 function stopLoading() {
   const bar = document.getElementById("progressBar");
-
   if (!bar) return;
-
   bar.style.width = "100%";
-
   setTimeout(() => {
     bar.style.width = "0%";
   }, 300);
@@ -33,25 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //employee login
   if (loginForm) {
-
     loginForm.addEventListener("submit", async (e) => {
       startLoading();
       e.preventDefault();
 
-      const employeeId =
-        document.getElementById("empId").value.trim();
-
-      const password =
-        document.getElementById("empPass").value.trim();
-
-      const msg =
-        document.getElementById("msg");
-      const btn =
-        loginForm.querySelector("button");
+      const employeeId = document.getElementById("empId").value.trim();
+      const password = document.getElementById("empPass").value.trim();
+      const msg = document.getElementById("msg");
+      const btn = loginForm.querySelector("button");
 
       btn.disabled = true;
-      btn.innerHTML =
-        "⏳ Logging in...";
+      btn.innerHTML = "⏳ Logging in...";
       try {
 
         const response = await fetch(
@@ -61,21 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-              employeeId,
-              password
-            })
+            body: JSON.stringify({employeeId,password})
           }
         );
 
         const data = await response.json();
 
         if (data.success) {
-
-          localStorage.setItem(
-            "employee",
-            JSON.stringify(data.employee)
-          );
+          localStorage.setItem("employee",JSON.stringify(data.employee));
           stopLoading();
           setTimeout(() => {
             window.location.href = "employee.html";
@@ -93,12 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
           btn.innerHTML = "Login";
           msg.style.color = "red";
         }
-
       } catch (error) {
-
-        msg.textContent =
-          "Server not running";
-
+        msg.textContent = "Server not running";
         msg.style.color = "red";
       }
     });
@@ -107,62 +82,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // EMPLOYEE ENTRY PAGE
   if (empDetailsDiv) {
 
-    const emp = JSON.parse(
-      localStorage.getItem("employee")
-    );
-
+    const emp = JSON.parse(localStorage.getItem("employee"));
     if (!emp) {
-
-      empDetailsDiv.innerHTML =
-        "<p style='color:red'>Please Login First</p>";
-
+      empDetailsDiv.innerHTML ="<p style='color:red'>Please Login First</p>";
       return;
     }
 
-    const time =
-      new Date().toLocaleString();
+    const time = new Date().toLocaleString();
+    const status = "";
+    empDetailsDiv.innerHTML = ` <h3>${emp.name}</h3>
+      <p> <b>ID:</b>  ${emp.employeeId} </p>
+      <p> <b>Department:</b> ${emp.department} </p>
+      <p> <b>Time:</b> ${time} </p>
 
-    const status =
-      "";
+      `; // <p> <b>Status:</b> ${status} </p>
 
-    empDetailsDiv.innerHTML = `
-      <h3>${emp.name}</h3>
+    const submitBtn = document.getElementById("submitEntryBtn");
 
-      <p>
-        <b>ID:</b>
-        ${emp.employeeId}
-      </p>
-
-      <p>
-        <b>Department:</b>
-        ${emp.department}
-      </p>
-
-      <p>
-        <b>Time:</b>
-        ${time}
-      </p>
-
-      <p>
-        <b>Status:</b>
-        ${status}
-      </p>
-    `;
-
-    const submitBtn =
-      document.getElementById(
-        "submitEntryBtn"
-      );
-
-   submitBtn.addEventListener(
-  "click",
-  async () => {
-
+   submitBtn.addEventListener("click", async () => {
     submitBtn.disabled = true;
     submitBtn.innerHTML = "⏳ Submitting...";
 
     try {
-
       const response = await fetch(
         `${API_URL}/api/records`,
         {
@@ -184,34 +125,21 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("entryMsg");
 
       if (data.success) {
-
-        entryMsg.textContent =
-          `Entry Recorded: ${data.record.status}`;
-
+        entryMsg.textContent = `Entry Recorded: ${data.record.status}`;
         entryMsg.style.color = "green";
-
-        submitBtn.innerHTML =
-          "✓ Submitted";
+        submitBtn.innerHTML = "✓ Submitted";
 
       } else {
-
-        entryMsg.textContent =
-          data.message;
-
+        entryMsg.textContent = data.message;
         entryMsg.style.color = "red";
-
         submitBtn.disabled = false;
-        submitBtn.innerHTML =
-          "Submit Entry";
+        submitBtn.innerHTML = "Submit Entry";
       }
 
     } catch (error) {
-
       alert("Unable to save record");
-
       submitBtn.disabled = false;
-      submitBtn.innerHTML =
-        "Submit Entry";
+      submitBtn.innerHTML = "Submit Entry";
     }
   }
 );
@@ -224,36 +152,18 @@ document.addEventListener("DOMContentLoaded", () => {
       (e) => {
         startLoading();
         e.preventDefault();
-        const username =
-          document.getElementById(
-            "username"
-          ).value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const msg = document.getElementById( "login-msg");
 
-        const password =
-          document.getElementById(
-            "password"
-          ).value;
-
-        const msg =
-          document.getElementById(
-            "login-msg"
-          );
-
-        if (
-          username === "admin" &&
-          password === "1234"
-        ) {
+        if (username === "admin" && password === "1234") {
           stopLoading();
-          window.location.href =
-            "records.html";
+          window.location.href = "records.html";
 
         } else {
           stopLoading();
-          msg.textContent =
-            "Invalid Credentials";
-
-          msg.style.color =
-            "red";
+          msg.textContent = "Invalid Credentials";
+          msg.style.color = "red";
         }
       }
     );
@@ -281,26 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
 <td>...</td>
 </tr>
 `;
-
       tbody.innerHTML = "";
 
       try {
+        const response = await fetch(`${API_URL}/api/records`);
 
-        const response =
-          await fetch(
-            `${API_URL}/api/records`
-          );
-
-        const records =
-          await response.json();
-
+        const records = await response.json();
         records.forEach(record => {
-
-          const row =
-            document.createElement(
-              "tr"
-            );
-
+          const row = document.createElement("tr");
           row.innerHTML = `
             <td>${record.employeeId}</td>
             <td>${record.name}</td>
@@ -308,27 +206,12 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${record.time}</td>
             <td>${record.status}</td>
           `;
-
           tbody.appendChild(row);
         });
 
-        document
-          .getElementById(
-            "downloadBtn"
-          )
-          .addEventListener(
-            "click",
-            () => {
-
+        document.getElementById("downloadBtn").addEventListener("click",() => {
               const csv = [
-                [
-                  "Employee ID",
-                  "Name",
-                  "Department",
-                  "Time",
-                  "Status"
-                ],
-
+                ["Employee ID","Name","Department","Time","Status"],
                 ...records.map(r => [
                   r.employeeId,
                   r.name,
@@ -336,42 +219,21 @@ document.addEventListener("DOMContentLoaded", () => {
                   r.time,
                   r.status
                 ])
-              ]
-                .map(row =>
+              ].map(row =>
                   row.join(",")
-                )
-                .join("\n");
+                ).join("\n");
 
-              const blob =
-                new Blob(
-                  [csv],
-                  {
-                    type:
-                      "text/csv"
-                  }
-                );
-
-              const link =
-                document.createElement(
-                  "a"
-                );
-
-              link.href =
-                URL.createObjectURL(
-                  blob
-                );
-
-              link.download =
-                "employee_records.csv";
-
+              const blob =new Blob([csv], {type: "text/csv"});
+              const link = document.createElement("a");
+              link.href = URL.createObjectURL(blob);
+              link.download = "employee_records.csv";
               link.click();
             }
           );
 
       } catch (error) {
-
-        console.error(error);
-      }
+          console.error(error);
+        }
     }
   }
 });
