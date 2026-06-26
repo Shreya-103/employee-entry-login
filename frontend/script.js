@@ -141,9 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ADMIN LOGIN
   if (adminLogin) {
-    adminLogin.addEventListener(
-      "submit",
-      (e) => {
+    adminLogin.addEventListener("submit",(e) => {
         startLoading();
         e.preventDefault();
         const username = document.getElementById("username").value;
@@ -164,7 +162,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // RECORDS PAGE
-
   if (recordsTable) {
     const tbody = recordsTable.querySelector("tbody");
     loadRecords();
@@ -213,9 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   r.time,
                   r.status
                 ])
-              ].map(row =>
-                  row.join(",")
-                ).join("\n");
+              ].map(row => row.join(",")).join("\n");
 
               const blob =new Blob([csv], {type: "text/csv"});
               const link = document.createElement("a");
