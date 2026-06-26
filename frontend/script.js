@@ -66,8 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } else {
           stopLoading();
-          msg.textContent =
-            data.message;
+          msg.textContent = data.message;
           btn.disabled = false;
           btn.innerHTML = "Login";
           msg.style.color = "red";
