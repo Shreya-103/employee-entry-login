@@ -22,7 +22,7 @@ body {
   top: 0;
   left: 0;
   width: 0%;
-  height: 2px;
+  height: 2.8px;
   background: #007bff;
   z-index: 9999;
   transition: width 0.3s ease;
