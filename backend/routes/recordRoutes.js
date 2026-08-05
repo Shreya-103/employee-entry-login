@@ -7,13 +7,8 @@ const Record = require("../models/Record");
 router.post("/", async (req, res) => {
   try {
     const { employeeId, name, department } = req.body;
-
     const today = new Date().toISOString().split("T")[0];
-
-    const todaysRecords = await Record.find({
-      employeeId,
-      dateKey: today
-    }).sort({ _id: 1 });
+    const todaysRecords = await Record.find({employeeId, dateKey: today}).sort({ _id: 1 });
 
     if (todaysRecords.length >= 2) {
       return res.status(400).json({

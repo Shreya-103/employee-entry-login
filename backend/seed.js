@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
 
-const Employee =
-require("./models/Employee");
+require('dotenv').config();
+const mongoose = require('mongoose');
+const Employee = require("./models/Employee");
 
-mongoose.connect(
-"mongodb+srv://plagiarism108_db_user:Shreya103@cluster0.xugjre9.mongodb.net/?appName=Cluster0"
-);
-
+mongoose.connect(process.env.MONGO_URI);
 Employee.insertMany([
 {
 employeeId:"UPT223",

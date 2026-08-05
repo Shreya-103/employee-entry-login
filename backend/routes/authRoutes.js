@@ -4,13 +4,8 @@ const router = express.Router();
 const Employee = require("../models/Employee");
 
 router.post("/login", async (req, res) => {
-
   const { employeeId, password } = req.body;
-
-  const employee =
-    await Employee.findOne({
-      employeeId
-    });
+  const employee = await Employee.findOne({employeeId});
 
   if (!employee) {
     return res.status(401).json({
