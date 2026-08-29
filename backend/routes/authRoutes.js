@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-router.post("/login",authenticate, async (req, res) => {
+router.post("/login", async (req, res) => {
   const { employeeId, password } = req.body;
   const employee = await Employee.findOne({employeeId});
 
