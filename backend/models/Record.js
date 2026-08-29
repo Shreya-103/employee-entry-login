@@ -9,7 +9,4 @@ const recordSchema = new mongoose.Schema({
   dateKey: String
 });
 
-module.exports = mongoose.model(
-  "Record",
-  recordSchema
-);
+module.exports = mongoose.model("Record", recordSchema);

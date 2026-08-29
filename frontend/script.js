@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (data.success) {
-          localStorage.setItem("employee",JSON.stringify(data.employee));
+          localStorage.setItem("token",data.token);
           stopLoading();
           setTimeout(() => {
             window.location.href = "employee.html";

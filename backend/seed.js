@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Employee = require("./models/Employee");
+const bcrypt = require("bcrypt.js");
+
+const hashedPassword = await bcrypt.hash("12345", 10);
 
 mongoose.connect(process.env.MONGO_URI);
 Employee.insertMany([
@@ -10,25 +13,25 @@ Employee.insertMany([
 employeeId:"UPT223",
 name:"Shreya",
 department:"HRD",
-password:"12345"
+password:hashedPassword
 },
 {
 employeeId:"EMP001",
-name:"John Doe",
+name:"Shree",
 department:"IT",
-password:"12345"
+password: hashedPassword
 },
 {
 employeeId:"EMP002",
-name:"Priya Sharma",
+name:"Surbhi",
 department:"HR",
-password:"12345"
+password:hashedPassword
 },
 {
 employeeId:"EMP003",
-name:"Ravi Kumar",
+name:"kirti",
 department:"Finance",
-password:"12345"
+password:hashedPassword
 }
 ]).then(()=>{
 console.log("Employees Added");

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const Record = require("../models/Record");
 
 // Create Record
@@ -17,10 +16,7 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const status =
-      todaysRecords.length === 0
-        ? "Inside Premises"
-        : "Outside Premises";
+    const status = todaysRecords.length === 0 ? "Inside Premises" : "Outside Premises";
 
     const record = await Record.create({
       employeeId,
@@ -47,10 +43,7 @@ router.post("/", async (req, res) => {
 // Get Records
 router.get("/", async (req, res) => {
   try {
-    const records = await Record.find().sort({
-      _id: -1
-    });
-
+    const records = await Record.find().sort({ _id: -1});
     res.json(records);
 
   } catch (error) {
