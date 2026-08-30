@@ -1,20 +1,15 @@
 function startLoading() {
   const bar = document.getElementById("progressBar");
   if (!bar) return;
-
   bar.style.width = "30%";
-
   setTimeout(() => {
     bar.style.width = "70%";
   }, 300);
 }
-
 function stopLoading() {
   const bar = document.getElementById("progressBar");
   if (!bar) return;
-
   bar.style.width = "100%";
-
   setTimeout(() => {
     bar.style.width = "0%";
   }, 300);
@@ -33,22 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Employee Login
 
   if (loginForm) {
-
     loginForm.addEventListener("submit", async (e) => {
-
       e.preventDefault();
       startLoading();
 
-      const employeeId = document
-        .getElementById("empId")
-        .value
-        .trim();
-
-      const password = document
-        .getElementById("empPass")
-        .value
-        .trim();
-
+      const employeeId = document.getElementById("empId").value.trim();
+      const password = document.getElementById("empPass").value.trim();
       const msg = document.getElementById("msg");
       const btn = loginForm.querySelector("button");
 
@@ -56,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.innerHTML = "⏳ Logging in...";
 
       try {
-
         const response = await fetch(
           `${API_URL}/api/auth/login`,
           {
@@ -74,100 +58,61 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (data.success) {
-
-          localStorage.setItem(
-            "token",
-            data.token
-          );
-
-          localStorage.setItem(
-            "employee",
-            JSON.stringify(data.employee)
-          );
-
+          localStorage.setItem("token",data.token);
+          localStorage.setItem("employee", JSON.stringify(data.employee));
           stopLoading();
-
           setTimeout(() => {
             window.location.href = "employee.html";
           }, 300);
 
         } else {
-
           stopLoading();
-
           msg.textContent = data.message;
           msg.style.color = "red";
-
           btn.disabled = false;
           btn.innerHTML = "Login";
         }
-
       } catch (error) {
-
         console.error("Login error:", error);
-
         stopLoading();
-
         msg.textContent = "Server not running";
         msg.style.color = "red";
-
         btn.disabled = false;
         btn.innerHTML = "Login";
       }
-
     });
-
   }
 
-
   // Employee Page
-
   if (empDetailsDiv) {
-
-    const emp = JSON.parse(
-      localStorage.getItem("employee")
-    );
-
+    const emp = JSON.parse(localStorage.getItem("employee"));
     const token = localStorage.getItem("token");
-
     if (!emp || !token) {
-
-      empDetailsDiv.innerHTML =
-        "<p style='color:red'>Please Login First</p>";
-
+      empDetailsDiv.innerHTML = "<p style='color:red'>Please Login First</p>";
       return;
     }
 
     const time = new Date().toLocaleString();
 
-    empDetailsDiv.innerHTML = `
-      <h3>${emp.name}</h3>
-
+    empDetailsDiv.innerHTML = `<h3>${emp.name}</h3>
       <p>
         <b>ID:</b> ${emp.employeeId}
       </p>
-
       <p>
         <b>Department:</b> ${emp.department}
       </p>
-
       <p>
         <b>Time:</b> ${time}
       </p>
     `;
 
-    const submitBtn =
-      document.getElementById("submitEntryBtn");
+    const submitBtn = document.getElementById("submitEntryBtn");
 
     if (submitBtn) {
-
       submitBtn.addEventListener("click", async () => {
-
         submitBtn.disabled = true;
         submitBtn.innerHTML = "⏳ Submitting...";
-
-        const currentToken =
-          localStorage.getItem("token");
+        const currentToken = localStorage.getItem("token");
 
         try {
 
@@ -190,20 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
           const data = await response.json();
-
-          const entryMsg =
-            document.getElementById("entryMsg");
+          const entryMsg = document.getElementById("entryMsg");
 
           if (response.status === 401) {
-
             localStorage.removeItem("token");
             localStorage.removeItem("employee");
-
-            entryMsg.textContent =
-              "Session expired. Please login again.";
-
+            entryMsg.textContent = "Session expired. Please login again.";
             entryMsg.style.color = "red";
-
             setTimeout(() => {
               window.location.href = "index.html";
             }, 1000);
@@ -212,99 +150,52 @@ document.addEventListener("DOMContentLoaded", () => {
           }
 
           if (data.success) {
-
-            entryMsg.textContent =
-              `Entry Recorded: ${data.record.status}`;
-
+            entryMsg.textContent = `Entry Recorded: ${data.record.status}`;
             entryMsg.style.color = "green";
-
             submitBtn.innerHTML = "✓ Submitted";
-
           } else {
-
-            entryMsg.textContent =
-              data.message;
-
+            entryMsg.textContent = data.message;
             entryMsg.style.color = "red";
-
             submitBtn.disabled = false;
             submitBtn.innerHTML = "Submit Entry";
           }
 
         } catch (error) {
-
-          console.error(
-            "Entry submission error:",
-            error
-          );
-
+          console.error( "Entry submission error:",error);
           alert("Unable to save record");
-
           submitBtn.disabled = false;
           submitBtn.innerHTML = "Submit Entry";
         }
-
       });
-
     }
-
   }
-
-
   // Admin Login
-
   if (adminLogin) {
-
     adminLogin.addEventListener("submit", (e) => {
-
       e.preventDefault();
       startLoading();
+      const username = document.getElementById("username").value;
 
-      const username =
-        document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-      const password =
-        document.getElementById("password").value;
+      const msg = document.getElementById("login-msg");
 
-      const msg =
-        document.getElementById("login-msg");
-
-      if (
-        username === "admin" &&
-        password === "1234"
-      ) {
-
+      if( username === "admin" && password === "1234") {
         stopLoading();
-
-        window.location.href =
-          "records.html";
-
+        window.location.href = "records.html";
       } else {
-
         stopLoading();
-
-        msg.textContent =
-          "Invalid Credentials";
-
+        msg.textContent = "Invalid Credentials";
         msg.style.color = "red";
       }
-
     });
-
   }
-
-
   // Records Page
 
   if (recordsTable) {
-
-    const tbody =
-      recordsTable.querySelector("tbody");
-
+    const tbody =  recordsTable.querySelector("tbody");
     loadRecords();
-
     async function loadRecords() {
-
       tbody.innerHTML = `
         <tr>
           <td colspan="5">Loading...</td>
@@ -312,12 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       try {
-
-        const token =
-          localStorage.getItem("token");
-
+        const token = localStorage.getItem("token");
         if (!token) {
-
           tbody.innerHTML = `
             <tr>
               <td colspan="5">
@@ -325,23 +212,16 @@ document.addEventListener("DOMContentLoaded", () => {
               </td>
             </tr>
           `;
-
           return;
         }
 
-        const response = await fetch(
-          `${API_URL}/api/records`,
-          {
+        const response = await fetch(`${API_URL}/api/records`,{
             method: "GET",
-
-            headers: {
-              "Authorization": `Bearer ${token}`
-            }
+            headers: { "Authorization": `Bearer ${token}`}
           }
         );
 
-        const data =
-          await response.json();
+        const data = await response.json();
 
         if (response.status === 401) {
 
@@ -360,7 +240,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!response.ok) {
-
           tbody.innerHTML = `
             <tr>
               <td colspan="5">
@@ -368,19 +247,12 @@ document.addEventListener("DOMContentLoaded", () => {
               </td>
             </tr>
           `;
-
           return;
         }
-
         const records = data;
-
         tbody.innerHTML = "";
-
         records.forEach(record => {
-
-          const row =
-            document.createElement("tr");
-
+          const row = document.createElement("tr");
           row.innerHTML = `
             <td>${record.employeeId}</td>
             <td>${record.name}</td>
@@ -388,22 +260,14 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${record.time}</td>
             <td>${record.status}</td>
           `;
-
           tbody.appendChild(row);
-
         });
 
-        const downloadBtn =
-          document.getElementById("downloadBtn");
+        const downloadBtn = document.getElementById("downloadBtn");
 
         if (downloadBtn) {
-
-          downloadBtn.addEventListener(
-            "click",
-            () => {
-
+          downloadBtn.addEventListener("click",() => {
               const csv = [
-
                 [
                   "Employee ID",
                   "Name",
@@ -419,53 +283,31 @@ document.addEventListener("DOMContentLoaded", () => {
                   record.time,
                   record.status
                 ])
-
-              ]
-                .map(row => row.join(","))
+                ] .map(row => row.join(","))
                 .join("\n");
 
-              const blob =
-                new Blob(
-                  [csv],
-                  {
-                    type: "text/csv"
-                  }
-                );
+              const blob = new Blob( [csv], {type: "text/csv"} );
 
-              const link =
-                document.createElement("a");
-
-              link.href =
-                URL.createObjectURL(blob);
-
-              link.download =
-                "employee_records.csv";
-
+              const link = document.createElement("a");
+              link.href = URL.createObjectURL(blob);
+              link.download = "employee_records.csv";
               link.click();
-
             }
           );
 
         }
 
       } catch (error) {
+        console.error("Records error:",error);
 
-        console.error(
-          "Records error:",
-          error
-        );
-
-        tbody.innerHTML = `
-          <tr>
+        tbody.innerHTML = `<tr>
             <td colspan="5">
               Unable to load records
             </td>
           </tr>
         `;
       }
-
     }
-
   }
 
 });
